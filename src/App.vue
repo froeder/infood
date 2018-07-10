@@ -4,7 +4,7 @@
             <v-list>
                 <v-list-tile value='true' v-for='(item, i) in items' :key='i' @click='linkto(item.linkpath)'>
                     <v-list-tile-action>
-                        <v-icon v-html='item.icon'></v-icon>
+                        <v-icon color="secondary" v-html='item.icon'></v-icon>
                     </v-list-tile-action>
                     <v-list-tile-content>
                         <v-list-tile-title>{{ item.title }}</v-list-tile-title>
