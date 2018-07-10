@@ -52,6 +52,7 @@ export default {
     }
   },
   created () {
+    console.log(this.filtroS)
   },
   methods: {
     buscar () {
@@ -68,4 +69,11 @@ export default {
   }
 }
 </script>
+
+<style>
+  a{
+    text-decoration: none
+  }
+</style>
+
 
