@@ -8,6 +8,19 @@
               <v-layout row wrap>
                 <v-flex xs6>
                   <v-text-field v-model="filtro" prepend-icon="search" label="Buscar"></v-text-field>
+                  <v-autocomplete
+                    :loading="loading"
+                    :items="items"
+                    :search-input.sync="search"
+                    v-model="select"
+                    cache-items
+                    class="mx-3"
+                    flat
+                    hide-no-data
+                    hide-details
+                    label="What state are you from?"
+                    solo-inverted
+                  ></v-autocomplete>
                 </v-flex>
                 <v-flex xs6>
                   <v-btn color="success" @click="buscar()" block>Buscar</v-btn>
@@ -43,16 +56,25 @@ import jsonAlimento from '../assets/alimentos.json'
 export default {
   data () {
     return {
-      users: [],
-      headers: [
-        { text: 'Nome', value: 'descricao' }
-      ],
       alimentos: [],
-      filtro: ''
+      filtro: '',
+      loading: false,
+      items: [],
+      search: null,
+      select: null,
+      states: []
     }
   },
   created () {
-    console.log(this.filtroS)
+    for (var i = 0; i < jsonAlimento.length; i++) {
+      this.states.push(jsonAlimento[i].descricao)
+      console.log(this.states[i])
+    }
+  },
+  watch: {
+    search (val) {
+      val && val !== this.select && this.querySelections(val)
+    }
   },
   methods: {
     buscar () {
@@ -65,6 +87,16 @@ export default {
     },
     detalhar (alimentos) {
       console.log(alimentos._id)
+    },
+    querySelections (v) {
+      this.loading = true
+      // Simulated ajax query
+      setTimeout(() => {
+        this.items = this.states.filter(e => {
+          return (e || '').toLowerCase().indexOf((v || '').toLowerCase()) > -1
+        })
+        this.loading = false
+      }, 500)
     }
   }
 }
