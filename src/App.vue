@@ -40,7 +40,7 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'LabAgenda',
+      title: 'In(fo)od',
       login: false,
       user_logged: ''
     }

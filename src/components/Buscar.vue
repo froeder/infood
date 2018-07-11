@@ -3,11 +3,11 @@
     <v-slide-y-transition mode="out-in">
       <v-layout column align-center>
         <v-card>
-          <v-card-title>Busque o alimentos</v-card-title>
+          <v-card-title>Filtrar alimentos</v-card-title>
             <v-card-text>
               <v-layout row wrap>
-                <v-flex xs6>
-                  <v-text-field v-model="filtro" prepend-icon="search" label="Buscar"></v-text-field>
+                <v-flex xs12>
+                  <!--<v-text-field v-model="filtro" prepend-icon="search" label="Buscar"></v-text-field>-->
                   <v-autocomplete
                     :loading="loading"
                     :items="items"
@@ -18,27 +18,51 @@
                     flat
                     hide-no-data
                     hide-details
-                    label="What state are you from?"
-                    solo-inverted
+                    label="Digite o nome alimento"
                   ></v-autocomplete>
                 </v-flex>
-                <v-flex xs6>
-                  <v-btn color="success" @click="buscar()" block>Buscar</v-btn>
+                <v-flex block xs12>
+                  <v-btn color="success" @click="buscar(select)" block>
+                    <v-icon>search</v-icon>
+                    Buscar
+                  </v-btn>
                 </v-flex>
               </v-layout>
               <v-layout row wrap>
                 <v-flex md12 xs12>
-                  <router-link 
+                  <v-card 
                       v-for="jsonAlimento in alimentos" 
-                      :key="jsonAlimento._id"
-                      :to="{
-                                name: 'Detalhe',
-                                params: {id: jsonAlimento._id }
-                              }">
-                    <v-btn>
-                      {{jsonAlimento.descricao}}
-                    </v-btn>
-                  </router-link>
+                      :key="jsonAlimento._id">
+                    <v-card-title><h3>{{jsonAlimento.descricao || 'Aguarde'}}</h3></v-card-title>
+                    <v-card-text>
+                      <p><strong>Cálcio:</strong> {{jsonAlimento.calcio}}</p>
+                      <p><strong>Carboidratos:</strong> {{jsonAlimento.carboidrato}}</p>
+                      <p><strong>Cinzas:</strong> {{jsonAlimento.cinzas}}</p>
+                      <p><strong>Cobre:</strong> {{jsonAlimento.cobre}}</p>
+                      <p><strong>Colesterol:</strong> {{jsonAlimento.colesterol}}</p>
+                      <p><strong>Energia - kcal:</strong> {{jsonAlimento.energia.kcal}}</p>
+                      <p><strong>Energia - kj:</strong> {{jsonAlimento.energia.kj}}</p>
+                      <p><strong>Ferro:</strong> {{jsonAlimento.ferro}}</p>
+                      <p><strong>Fibra Alimentar: </strong>{{jsonAlimento.fibra_alimentar}}</p>
+                      <p><strong>Fósforo:</strong> {{jsonAlimento.fosforo}}</p>
+                      <p><strong>Lipídeos:</strong> {{jsonAlimento.lipideos}}</p>
+                      <p><strong>Magnésio:</strong> {{jsonAlimento.magnesio}}</p>
+                      <p><strong>Manganes</strong> {{jsonAlimento.manganes}}</p>
+                      <p><strong>Niacina:</strong> {{jsonAlimento.niacina}}</p>
+                      <p><strong>Piridoxina:</strong> {{jsonAlimento.piridoxina}}</p>
+                      <p><strong>Potássio:</strong> {{jsonAlimento.potassio}}</p>
+                      <p><strong>Proteina:</strong> {{jsonAlimento.proteina}}</p>
+                      <p><strong>RAE:</strong> {{jsonAlimento.rae}}</p>
+                      <p><strong>RE:</strong> {{jsonAlimento.re}}</p>
+                      <p><strong>Retinol:</strong> {{jsonAlimento.retinol}}</p>
+                      <p><strong>Riboflavina:</strong> {{jsonAlimento.riboflavina}}</p>
+                      <p><strong>Sodio:</strong> {{jsonAlimento.sodio}}</p>
+                      <p><strong>Tiamina:</strong> {{jsonAlimento.tiamina}}</p>
+                      <p><strong>Umidade:</strong> {{jsonAlimento.umidade}}</p>
+                      <p><strong>Vitamina C:</strong> {{jsonAlimento.vitamina_c}}</p>
+                      <p><strong>Zinco</strong> {{jsonAlimento.zinco}}</p>
+                    </v-card-text>
+                  </v-card>
                 </v-flex>
               </v-layout>
             </v-card-text>
@@ -68,7 +92,6 @@ export default {
   created () {
     for (var i = 0; i < jsonAlimento.length; i++) {
       this.states.push(jsonAlimento[i].descricao)
-      console.log(this.states[i])
     }
   },
   watch: {
@@ -77,16 +100,13 @@ export default {
     }
   },
   methods: {
-    buscar () {
+    buscar (select) {
       this.alimentos = []
       for (var i = 0; i < jsonAlimento.length; i++) {
-        if (this.filtro.toLowerCase() === jsonAlimento[i].descricao.split(',')[0].toLowerCase()) {
+        if (this.select === jsonAlimento[i].descricao) {
           this.alimentos.push(jsonAlimento[i])
         }
       }
-    },
-    detalhar (alimentos) {
-      console.log(alimentos._id)
     },
     querySelections (v) {
       this.loading = true
