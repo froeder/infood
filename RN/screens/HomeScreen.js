@@ -18,24 +18,28 @@ export default function HomeScreen() {
   const [alimentos, setAlimentos] = useState() ;
   const [tamanho, setTamanho] = useState(0) ;
   const [nomes, setNomes] = useState([]) ;
+  const [data, setData] = useState([]) ;
 
   useEffect(() => {
     let teste = []
     setTamanho(Object.keys(data).length)
     setAlimentos(data)
     if(alimentos){
-      for(let i = 0 ; i <= tamanho ; i++){
+      for(let i = 0 ; i <= tamanho  ; i++){
         teste[i] = alimentos[i]
       }
-
-      console.log('teste')
-      console.log(teste)
       setNomes(teste)
     }
     console.log(nomes)
     
-    
   },[alimentos])
+
+  // useEffect(() => {
+  //   for(let i = 0 ; i <= tamanho ; i++){
+  //     console.log('aqui')
+  //     console.log(nomes)
+  //   }
+  // }, [])
 
   return (
     <ScrollView
